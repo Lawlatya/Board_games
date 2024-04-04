@@ -1,19 +1,20 @@
 library(shiny)
 library(dplyr)
 
-# Загрузка данных
-data <- read.csv("bg_info.csv", stringsAsFactors = FALSE)
+# Upload data
+Board_games_search <- read.csv("bg_info.csv", stringsAsFactors = FALSE)
 
-# Создание списка всех уникальных типов игр
-all_types <- unique(data$Type)
+# Create a list of all unique game types
+all_types <- unique(Board_games_search$Type)
 
-# Определение интерфейса
+# Define what user see
 ui <- fluidPage(
   titlePanel("Top 5 games with highest rating"),
   
   sidebarLayout(
     sidebarPanel(
-      sliderInput("price", "Price:", min = 0, max = 1000, value = c(0, 1000), step = 10),
+      # Price in USD
+      sliderInput("price", "Price (USD):", min = 0, max = 1000, value = c(0, 1000), step = 10),
       sliderInput("complexity", "Complexity:", min = 0, max = 5, value = c(0, 5)),
       sliderInput("age", "Age:", min = 6, max = 18, value = c(6, 18)),
       numericInput("players_input", "Enter the number of players:", value = NULL, min = 1, max = 100),
@@ -41,32 +42,32 @@ ui <- fluidPage(
               ')
 )
 
-# Серверная часть
+# the server part
 server <- function(input, output, session) {
   
-  # Функция для фильтрации данных
+  # Function for filtering data
   filtered_data <- reactive({
-    req(data)
+    req(Board_games_search)
     
-    filtered <- data
+    filtered <- Board_games_search
     
-    # Фильтрация по количеству игроков
+    # Filter by number of players
     if (!is.na(input$players_input)) {
-      # Если input$players_input не NA, применяем фильтр
+      # If players_input is NA, use the original data without filtering
       filtered <- filtered %>%
         filter(
           Min.players <= input$players_input & Max.players >= input$players_input
         )
     }
     
-    # Применяем остальные фильтры к переменной filtered
+    # Filters for Price, Complexity and Age
     filtered <- filtered %>%
       filter(
         Price >= input$price[1] & Price <= input$price[2],
         Complexity >= input$complexity[1] & Complexity <= input$complexity[2],
         Age >= input$age[1] & Age <= input$age[2]
       )
-    
+    # Time filter
     selected_time <- input$time_input
     
     if (input$time_input == "<30") {
@@ -83,7 +84,7 @@ server <- function(input, output, session) {
         filter((Min.time + Max.time) / 2 >= 120 - 5)
     }
     
-    # Фильтрация по типу игры
+    # Filter by game type
     if (length(input$type) > 0) {
       filtered <- filtered %>%
         filter(Type %in% input$type)
@@ -92,12 +93,13 @@ server <- function(input, output, session) {
     return(filtered)
   })
   
-  # Функция для поиска топ-5 игр с наивысшим рейтингом
+  # find top 5 highest rated games or all
   top_games <- reactive({
     req(filtered_data())
-    
+    # If we have Show All games, show all games
     if(input$show_all) {
       return(filtered_data())
+    # if not, show 5 top 5 games
     } else {
       return(filtered_data() %>%
                arrange(desc(Avg.rating)) %>%
@@ -105,7 +107,7 @@ server <- function(input, output, session) {
     }
   })
   
-  # Отображение таблицы с играми
+  # Display table or warning
   output$top_games_table <- renderTable({
     if (nrow(filtered_data()) == 0) {
       return("Sorry, no games were found matching your request. Please change your request.")
@@ -115,5 +117,5 @@ server <- function(input, output, session) {
   })
 }
 
-# Запуск приложения
+# Run app
 shinyApp(ui = ui, server = server)
