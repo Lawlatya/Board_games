@@ -1,0 +1,10 @@
+name: board_game_project
+title:
+username: lawlatya
+account: lawlatya
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 11673003
+bundleId: 8456141
+url: https://lawlatya.shinyapps.io/board_game_project/
+version: 1

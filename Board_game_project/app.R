@@ -36,7 +36,7 @@ ui <- fluidPage(
   
   tags$script('
               $(document).on("click", "#go_to_link", function() {
-                window.open("http://google.com");
+                window.open("https://github.com/Lawlatya/Board_games");
               });
               ')
 )
