@@ -9,7 +9,7 @@ all_types <- unique(Board_games_search$Type)
 
 # Define what user see
 ui <- fluidPage(
-  titlePanel(tags$h1("Choose your ideal game!", style = "font-family: Arial, sans-serif; font-size: 24px; font-weight: bold;")),
+  titlePanel(tags$h1("Find your ideal board game!", style = "font-family: Arial, sans-serif; font-size: 24px; font-weight: bold;")),
   
   sidebarLayout(
     sidebarPanel(
