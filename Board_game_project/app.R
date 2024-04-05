@@ -9,18 +9,21 @@ all_types <- unique(Board_games_search$Type)
 
 # Define what user see
 ui <- fluidPage(
-  titlePanel("Choose your ideal game!"),
+  titlePanel(tags$h1("Choose your ideal game!", style = "font-family: Arial, sans-serif; font-size: 24px; font-weight: bold;")),
   
   sidebarLayout(
     sidebarPanel(
       # Price in USD slider
-      sliderInput("price", "Price (USD):", min = 0, max = 1000, value = c(0, 1000), step = 10),
+      sliderInput("price", "Price (USD):", min = 0, max = 1000, 
+                  value = c(0, 1000), step = 10),
       # Complexity slider
-      sliderInput("complexity", "Complexity:", min = 0, max = 5, value = c(0, 5)),
+      sliderInput("complexity", "Complexity:", min = 0, max = 5, 
+                  value = c(0, 5)),
       # Age slider
       sliderInput("age", "Age:", min = 6, max = 18, value = c(6, 18)),
       # Input number of players
-      numericInput("players_input", "Enter the number of players:", value = NULL, min = 1, max = 100),
+      numericInput("players_input", "Enter the number of players:", 
+                   value = NULL, min = 1, max = 100),
       # Average time of play
       selectInput("time_input", "Estimated Time to Play:", 
                   choices = c("Doesn't matter", "Up to 30 minutes" = "<30",
@@ -28,7 +31,8 @@ ui <- fluidPage(
                               "From 1 to 2 hours" = "60-120",
                               "More than 2 hours" = ">120")),
       # Check box for game type
-      checkboxGroupInput("type", "Game type:", choices = all_types, selected = NULL),
+      checkboxGroupInput("type", "Game type:", choices = all_types, 
+                         selected = NULL),
       # Add line to divide filters
       tags$hr(style = "border-color: black;"),
       # Add box for showing all games, not only top 5 games
@@ -41,7 +45,13 @@ ui <- fluidPage(
     mainPanel(
       tags$div(
         h4("Instructions:"),
-        p("Adjust the filters on the left sidebar to find games that match your preferences. You can filter by", strong("price, complexity, age, number of players, estimated time to play, and game type"),". The top 5 games with the highest ratings that match your criteria will be displayed in the table on the right. If you want to see all games, tick the box", strong("Show all"),"."),
+        p("Adjust the filters on the left sidebar to find games that match your
+          preferences. You can filter by", strong("price, complexity, age, 
+                                                  number of players, estimated 
+                                                  time to play, and game type"),
+          ". The top 5 games with the highest ratings that match your criteria 
+          will be displayed in the table on the right. If you want to see all 
+          games, tick the box", strong("Show all"),"."),
         br(),
         tableOutput("top_games_table")
       )
@@ -69,7 +79,8 @@ server <- function(input, output, session) {
       # If players_input is NA, use the original data without filtering
       filtered <- filtered %>%
         filter(
-          Min.players <= input$players_input & Max.players >= input$players_input
+          Min.players <= input$players_input & 
+            Max.players >= input$players_input
         )
     }
     
@@ -77,7 +88,8 @@ server <- function(input, output, session) {
     filtered <- filtered %>%
       filter(
         Price >= input$price[1] & Price <= input$price[2],
-        Complexity >= input$complexity[1] & Complexity <= input$complexity[2],
+        Complexity >= input$complexity[1] & 
+          Complexity <= input$complexity[2],
         Age >= input$age[1] & Age <= input$age[2]
       )
     # Time filter
@@ -88,10 +100,12 @@ server <- function(input, output, session) {
         filter((Min.time + Max.time) / 2 <= 30)
     } else if (input$time_input == "<60") {
       filtered <- filtered %>%
-        filter((Min.time + Max.time) / 2 <= 60 + 5 & (Min.time + Max.time) / 2 >= 25)
+        filter((Min.time + Max.time) / 2 <= 60 + 5 & 
+                 (Min.time + Max.time) / 2 >= 25)
     } else if (input$time_input == "60-120") {
       filtered <- filtered %>%
-        filter((Min.time + Max.time) / 2 >= 60 - 5 & (Min.time + Max.time) / 2 <= 120 + 5)
+        filter((Min.time + Max.time) / 2 >= 60 - 5 & 
+                 (Min.time + Max.time) / 2 <= 120 + 5)
     } else if (input$time_input == ">120") {
       filtered <- filtered %>%
         filter((Min.time + Max.time) / 2 >= 120 - 5)
@@ -123,7 +137,8 @@ server <- function(input, output, session) {
   # Display table or warning
   output$top_games_table <- renderTable({
     if (nrow(filtered_games()) == 0) {
-      return("Sorry, no games were found matching your request. Please change your request.")
+      return("Sorry, no games were found matching your request. 
+             Please change your request.")
     } else {
       return(top_games())
     }
