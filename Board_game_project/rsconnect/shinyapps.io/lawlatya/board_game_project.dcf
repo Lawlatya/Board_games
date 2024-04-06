@@ -5,6 +5,6 @@ account: lawlatya
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11673003
-bundleId: 8460417
+bundleId: 8460787
 url: https://lawlatya.shinyapps.io/board_game_project/
 version: 1
