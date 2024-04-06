@@ -20,7 +20,7 @@ ui <- fluidPage(
       sliderInput("complexity", "Complexity:", min = 0, max = 5, 
                   value = c(0, 5)),
       # Age slider
-      sliderInput("age", "Age:", min = 6, max = 18, value = c(6, 18)),
+      sliderInput("age", "Minimum age:", min = 6, max = 18, value = c(6, 18)),
       # Input number of players
       numericInput("players_input", "Enter the number of players:", 
                    value = NULL, min = 1, max = 100),
