@@ -22,7 +22,13 @@ Game time, initially the filter is set to say that the game time is not matter, 
 
 You will be offered the top 5 games with an average playing time approximately suitable for you (plus or minus 5 minutes). Select one of the suggested options to receive recommendations for games that fit within the specified time. This filter will help you organize your time the way you need.
 
-And the last filter is the choice of the type of game, the description of each type, you can read above, check those boxes for the type of games that interest you. You can choose as many types of games as you need.
+And the last filter is the choice of the type of game, the description of each type, check those boxes for the type of games that interest you. You can choose as many types of games as you need.
+
+•	Strategy – this is the type of game that requires you to think hard and help you develop long-term planning skills to achieve your goals.
+•	Thematic – Do you want to immerse yourself in the world of fantasy, scientific fantasy? Then this type of game is for you, you will be able to develop your imagination and feel like a hero.
+•	Family – This type of game is suitable for both adults and children, it is a great pastime for everyone. They can be both complex and simple dynamic.
+• Abstract – This type of game usually does not have a plot, but it focuses on pure mechanics and strategy. The main goal of this type of game is often to develop thinking, planning and analytical skills.
+•	Party – These games are designed to surprise and have fun with your friends and family. These games can bring everyone together around the table and create unforgettable moments of laughter and joy.
 
 If you want to view not only the top 5 games that match your preferences, but all the available options, you can check the box next to the "Show all". After this, you will see all the board games that match your filters. This will allow you to become more familiar with the available options and choose the most suitable game from the available ones. This option will be useful for those who want to find out more board games that match their preferences before making a purchasing decision.
 
